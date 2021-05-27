@@ -1,0 +1,41 @@
+package com.ramvp.blogPessoal.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ramvp.blogPessoal.model.Postagem;
+import com.ramvp.blogPessoal.repository.Postagemrepository;
+
+@RestController
+@RequestMapping("/postagens")
+@CrossOrigin("*")
+public class PostagemController {
+	
+	@Autowired
+	public Postagemrepository repository;
+	
+	@GetMapping
+	public List<Postagem> findAllPostagens() {
+		return repository.findAll();
+	}
+	
+	@GetMapping("/porid/{id}")
+	public Optional<Postagem> findByIDPostagem(@PathVariable Long id) {
+		return repository.findById(id);
+	}
+	
+	@GetMapping("/portitulo/{titulo}")
+	public Optional<Postagem> findByTitulo(@PathVariable String titulo) {
+		return repository.findByTituloLike(titulo);
+	}
+
+}
+
+
